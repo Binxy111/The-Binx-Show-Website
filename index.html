@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Binx Show</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #0a0a0a;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      width: 100%;
+      text-align: center;
+      padding: 2rem 1rem;
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
+      box-shadow: 0 0 20px #ff00cc40;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      color: #ff00cc;
+      text-shadow: 0 0 10px #ff00cc, 0 0 20px #ff00cc;
+    }
+    .video-section {
+      max-width: 900px;
+      width: 90%;
+      margin: 2rem 0;
+    }
+    video {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 0 30px #ff00cc33;
+    }
+    .episode-list {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .episode-btn {
+      background: #111;
+      border: 1px solid #ff00cc55;
+      color: #ff00cc;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .episode-btn:hover {
+      background: #ff00cc;
+      color: #fff;
+      transform: scale(1.05);
+    }
+    .feedback-section {
+      max-width: 600px;
+      width: 90%;
+      padding: 2rem;
+      margin: 2rem 0;
+      background: #111;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #ff00cc40;
+    }
+    .feedback-section h2 {
+      color: #ff00cc;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    input, textarea, button {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    input, textarea {
+      background: #222;
+      color: #fff;
+      border: 1px solid #444;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    button {
+      background: #ff00cc;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #d600a8;
+    }
+    footer {
+      margin: 2rem 0;
+      color: #555;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 600px) {
+      header h1 { font-size: 2rem; }
+      .feedback-section { padding: 1.5rem; }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init("epb1GNwtHoA9F9F42");
+    })();function playEpisode(file) {
+  const player = document.getElementById("player");
+  player.src = file;
+  player.play();
+}
+
+function sendEmail(event) {
+  event.preventDefault();
+  const params = {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    message: document.getElementById("message").value
+  };
+  emailjs.send("service_t74nf7p", "template_x600cgn", params)
+    .then(() => {
+      alert("Feedback sent successfully! Thank you ❤️");
+      document.getElementById("feedbackForm").reset();
+    }, (err) => {
+      alert("Error sending feedback: " + JSON.stringify(err));
+    });
+}
+
+  </script>
+</head>
+<body>
+  <header>
+    <h1>The Binx Show</h1>
+  </header>  <section class="video-section">
+    <video id="player" controls poster="poster.png">
+      <source src="videos/episode1.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video><div class="episode-list">
+  <button class="episode-btn" onclick="playEpisode('videos/episode1.mp4')">Episode 1</button>
+  <button class="episode-btn" onclick="playEpisode('videos/episode2.mp4')">Episode 2</button>
+  <button class="episode-btn" onclick="playEpisode('videos/episode3.mp4')">Episode 3</button>
+</div>
+
+  </section>  <section class="feedback-section">
+    <h2>Send Us Feedback</h2>
+    <form id="feedbackForm" onsubmit="sendEmail(event)">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <textarea id="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Feedback</button>
+    </form>
+  </section>  <footer>
+    © 2025 The Binx Show — All rights reserved.
+  </footer>
+</body>
+</html>
